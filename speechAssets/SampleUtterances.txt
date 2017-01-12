@@ -12,6 +12,7 @@ AnswerIntent the answer is {Answer}
 AnswerIntent my answer is {Answer}
 AnswerIntent is it {Answer}
 AnswerIntent {Answer} is my answer
+AnswerIntent answer is {Answer}
 AnswerOnlyIntent {Answer}
 
 AMAZON.StartOverIntent start game
