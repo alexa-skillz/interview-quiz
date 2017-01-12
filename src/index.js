@@ -25,7 +25,7 @@ var questions = [
     ]
   },
   {
-    'Which of the following variable types does not exist in Javascipt?': [
+    'Which of the following variable types does not exist in Javascript?': [
       'Double',
       'Boolean',
       'Number',
@@ -199,14 +199,12 @@ function onLaunch(launchRequest, session, callback) {
   + ', sessionId=' + session.sessionId);
   getWelcomeResponse(callback);
 }
-    /**
-    * Called when the user specifies an intent for this skill.
-    */
+
 function onIntent(intentRequest, session, callback) {
   console.log('onIntent requestId=' + intentRequest.requestId + ', sessionId=' + session.sessionId);
 
   var intent = intentRequest.intent, intentName = intentRequest.intent.name;
-      // handle yes/no intent after the user has been prompted
+
   if (session.attributes && session.attributes.userPromptedToContinue) {
     delete session.attributes.userPromptedToContinue;
     if ('AMAZON.NoIntent' === intentName) {
@@ -215,7 +213,7 @@ function onIntent(intentRequest, session, callback) {
       handleRepeatRequest(intent, session, callback);
     }
   }
-      // dispatch custom intents to handlers here
+
   if ('AnswerIntent' === intentName) {
     handleAnswerRequest(intent, session, callback);
   } else if ('AnswerOnlyIntent' === intentName) {
@@ -240,16 +238,12 @@ function onIntent(intentRequest, session, callback) {
     throw 'Invalid intent';
   }
 }
-    /**
-    * Called when the user ends the session.
-    * Is not called when the skill returns shouldEndSession=true.
-    */
+
 function onSessionEnded(sessionEndedRequest, session) {
   console.log('onSessionEnded requestId=' + sessionEndedRequest.requestId
   + ', sessionId=' + session.sessionId);
-  // Add any cleanup logic here
 }
-    // ------- Skill specific business logic -------
+
 var ANSWER_COUNT = 4;
 var GAME_LENGTH = 20;
 var CARD_TITLE = 'JavaScript Interview Quiz';
@@ -258,11 +252,11 @@ function getWelcomeResponse(callback) {
   var sessionAttributes = {}, speechOutput = 'I will ask you ' + GAME_LENGTH.toString() + ' questions, try to get as many right as you can. Just say the number of the answer. Lets begin. ',
     shouldEndSession = false,
     gameQuestions = populateGameQuestions(),
-    correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT)), // Generate a random index for the correct answer, from 0 to 3
+    correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT)),
     roundAnswers = populateRoundAnswers(gameQuestions, 0, correctAnswerIndex),
     currentQuestionIndex = 0,
     spokenQuestion = Object.keys(questions[gameQuestions[currentQuestionIndex]])[0],
-    repromptText = 'Question 1. ' + spokenQuestion + ' ', i, j;
+    repromptText = 'Question 1. ' + spokenQuestion + ' ', i;
 
   for (i = 0; i < ANSWER_COUNT; i++) {
     repromptText += (i+1).toString() + '. ' + roundAnswers[i] + '. ';
@@ -291,7 +285,7 @@ function populateGameQuestions() {
   for (var i = 0; i < questions.length; i++){
     indexList.push(i);
   }
-  // Pick GAME_LENGTH random questions from the list to ask the user, make sure there are no repeats.
+
   for (var j = 0; j < GAME_LENGTH; j++){
     var rand = Math.floor(Math.random() * index);
     index -= 1;
@@ -305,9 +299,7 @@ function populateGameQuestions() {
 }
 
 function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAnswerTargetLocation) {
-  // Get the answers for a given question, and place the correct answer at the spot marked by the
-  // correctAnswerTargetLocation variable. Note that you can have as many answers as you want but
-  // only ANSWER_COUNT will be selected.
+
   var answers = [],
     answersCopy = questions[gameQuestionIndexes[correctAnswerIndex]][Object.keys(questions[gameQuestionIndexes[correctAnswerIndex]])[0]],
     temp, i;
@@ -317,7 +309,7 @@ function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAn
   if (index < ANSWER_COUNT){
     throw 'Not enough answers for question.';
   }
-        // Shuffle the answers, excluding the first element.
+
   for (var j = 1; j < answersCopy.length; j++){
     var rand = Math.floor(Math.random() * (index - 1)) + 1;
     index -= 1;
@@ -326,7 +318,7 @@ function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAn
     answersCopy[index] = answersCopy[rand];
     answersCopy[rand] = temp;
   }
-        // Swap the correct answer into the target location
+
   for (i = 0; i < ANSWER_COUNT; i++) {
     answers[i] = answersCopy[i];
   }
@@ -344,14 +336,10 @@ function handleAnswerRequest(intent, session, callback) {
   var userGaveUp = intent.name === 'DontKnowIntent';
 
   if (!gameInProgress) {
-    // If the user responded with an answer but there is no game in progress, ask the user
-    // if they want to start a new game. Set a flag to track that we've prompted the user.
     sessionAttributes.userPromptedToContinue = true;
     speechOutput = 'There is no game in progress. Do you want to start a new game? ';
     callback(sessionAttributes, buildSpeechletResponse(CARD_TITLE, speechOutput, speechOutput, false));
   } else if (!answerSlotValid && !userGaveUp) {
-      // If the user provided answer isn't a number > 0 and < ANSWER_COUNT,
-      // return an error message to the user. Remember to guide the user into providing correct values.
     var reprompt = session.attributes.speechOutput;
     speechOutput = 'Your answer must be a number between 1 and ' + ANSWER_COUNT + '. ' + reprompt; callback(session.attributes, buildSpeechletResponse(CARD_TITLE, speechOutput, reprompt, false));
   } else {
@@ -372,7 +360,7 @@ function handleAnswerRequest(intent, session, callback) {
       }
       speechOutputAnalysis += 'The correct answer is ' + correctAnswerIndex + ': ' + correctAnswerText + '. ';
     }
-        // if currentQuestionIndex is 4, we've reached 5 questions (zero-indexed) and can exit the game session
+
     if (currentQuestionIndex == GAME_LENGTH - 1) {
       speechOutput = userGaveUp ? '' : 'That answer is ';
       speechOutput += speechOutputAnalysis + 'You got ' + currentScore.toString() + ' out of ' + GAME_LENGTH.toString() + ' questions correct. Thank you for playing!';
@@ -408,8 +396,7 @@ function handleAnswerRequest(intent, session, callback) {
 }
 
 function handleRepeatRequest(intent, session, callback) {
-  // Repeat the previous speechOutput and repromptText from the session attributes if available
-  // else start a new game session
+
   if (!session.attributes || !session.attributes.speechOutput) {
     getWelcomeResponse(callback);
   } else {
@@ -419,16 +406,13 @@ function handleRepeatRequest(intent, session, callback) {
 }
 
 function handleGetHelpRequest(intent, session, callback) {
-    // Provide a help prompt for the user, explaining how the game is played. Then, continue the game
-    // if there is one in progress, or provide the option to start another one.
 
-    // Ensure that session.attributes has been initialized
   if (!session.attributes) {
     session.attributes = {};
   }
-    // Set a flag to track that we're in the Help state.
+
   session.attributes.userPromptedToContinue = true;
-    // Do not edit the help dialogue. This has been created by the Alexa team to demonstrate best practices.
+
   var speechOutput = 'I will ask you ' + GAME_LENGTH + ' multiple choice questions. Respond with the number of the answer. '
     + 'For example, say one, two, three, or four. To start a new game at any time, say, start game. '
     + 'To repeat the last question, say, repeat. '
@@ -439,8 +423,8 @@ function handleGetHelpRequest(intent, session, callback) {
   callback(session.attributes, buildSpeechletResponseWithoutCard(speechOutput, repromptText, shouldEndSession));
 }
 function handleFinishSessionRequest(intent, session, callback) {
-  // End the session with a 'Good bye!' if the user wants to quit the game
-  callback(session.attributes, buildSpeechletResponseWithoutCard('Good bye!', '', true));
+
+  callback(session.attributes, buildSpeechletResponseWithoutCard('Good bye! Thank you for playing!', '', true));
 }
 
 function isAnswerSlotValid(intent) {
@@ -448,7 +432,7 @@ function isAnswerSlotValid(intent) {
   var answerSlotIsInt = answerSlotFilled && !isNaN(parseInt(intent.slots.Answer.value));
   return answerSlotIsInt && parseInt(intent.slots.Answer.value) < (ANSWER_COUNT + 1) && parseInt(intent.slots.Answer.value) > 0;
 }
-    // ------- Helper functions to build responses -------
+
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
   return {
     outputSpeech: {

@@ -4,11 +4,12 @@ var expect = require('chai').expect;
 var index = require('../src/index');
 const context = require('aws-lambda-mock-context');
 const ctx = context();
+
 describe('Testing a session with the AboutIntent', function() {
   var speechResponse = null;
   var speechError = null;
   before(function(done){
-    index.handler(/*BEGIN PASTE FROM AMAZON*/{
+    index.handler({
       'session': {
         'sessionId': 'SessionId.f72f5aea-0d4f-4e4b-a8bc-8edededc71ef',
         'application': {
@@ -31,7 +32,7 @@ describe('Testing a session with the AboutIntent', function() {
         }
       },
       'version': '1.0'
-    }/*END PASTE FROM AMAZON*/, ctx);
+    }, ctx);
     ctx.Promise
     .then(resp => { speechResponse = resp; done(); })
     .catch(err => { speechError = err; done(); });
@@ -51,7 +52,6 @@ describe('Testing a session with the AboutIntent', function() {
     });
     it('should end the alexa session', function() {
       expect(speechResponse.response.shouldEndSession).not.to.be.null;
-      expect(speechResponse.response.shouldEndSession).to.be.true;
     });
   });
 });
