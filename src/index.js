@@ -2,51 +2,11 @@
 
 var questions = [
   {
-    'Javascript is...': [
-      'Object based',
-      'Subjective',
-      'Objective',
-      'Evil'
-    ]
-  },
-  {
-    'Primitive types are passed by...': [
-      'Value',
-      'Pointer',
-      'Reference'
-    ]
-  },
-  {
     'Which is not a Primitive data type in javascript?': [
       'Character',
       'Boolean',
       'Number',
       'String'
-    ]
-  },
-  {
-    'Which of the following variable types does not exist in Javascript?': [
-      'Double',
-      'Boolean',
-      'Number',
-      'Object',
-      'String'
-    ]
-  },
-  {
-    'Which of these operators compares two variables by value and type?': [
-      'Triple equal sign',
-      'None of these',
-      'Single equal sign',
-      'Double equal sign'
-    ]
-  },
-  {
-    'The if statement is used to...': [
-      'Deal with logic that should execute only when a condition is true',
-      'Deal with logic that should execute only when a condition is false',
-      'Convert an integer value to a boolean',
-      'Create a loop that runs as long as a condition is true'
     ]
   },
   {
@@ -58,14 +18,6 @@ var questions = [
     ]
   },
   {
-    'JavaScript supports dynamic typing, you can assign different types of values to the same variable...': [
-      'true',
-      'false',
-      'depends on context',
-      'none of these'
-    ]
-  },
-  {
     'Which of the following is not a reserved word?': [
       'program',
       'let',
@@ -74,43 +26,11 @@ var questions = [
     ]
   },
   {
-    'String concatenation is...': [
-      'the combination of two or more text Strings',
-      'the splitting of a String into two or more Strings',
-      'a complex String',
-      'an elemental String'
-    ]
-  },
-  {
-    'What is the value of dog dot length?': [
-      'Three',
-      'Four',
-      'Two',
-      'None of these'
-    ]
-  },
-  {
     'In an array object, what is the key of the first value?': [
       '0',
       '1',
       '-1',
       'None of these'
-    ]
-  },
-  {
-    'The var statement is used to...': [
-      'Create a new variable',
-      'Retrieve a variable descriptor',
-      'Declare a member of a class',
-      'Change a constant'
-    ]
-  },
-  {
-    'What does the “break” statement do?': [
-      'Aborts the current loop or switch statement.',
-      'Cancels the current event.',
-      'Aborts the current function.',
-      'Simulates a JavaScript crash.'
     ]
   },
   {
@@ -127,38 +47,6 @@ var questions = [
       'boolean',
       'number',
       'string'
-    ]
-  },
-  {
-    'What keyword is used to begin a conditional statement?': [
-      'if',
-      'when',
-      'how',
-      'equal'
-    ]
-  },
-  {
-    'What character combination is used to create a single line comment?': [
-      'backslash backslash',
-      'exclamation point exclamation point',
-      'dash dash',
-      'colon colon'
-    ]
-  },
-  {
-    'Properties of objects may be accessed using...': [
-      'the dot notation',
-      'the redirect notation',
-      'the array notation',
-      'None of the these'
-    ]
-  },
-  {
-    'What keyword is used to define the alternative path to take in a conditional statement?': [
-      'Else',
-      'Or',
-      'Next',
-      'Reject'
     ]
   }
 ];
@@ -245,7 +133,7 @@ function onSessionEnded(sessionEndedRequest, session) {
 }
 
 var ANSWER_COUNT = 4;
-var GAME_LENGTH = 20;
+var GAME_LENGTH = 2;
 var CARD_TITLE = 'JavaScript Interview Quiz';
 
 function getWelcomeResponse(callback) {
