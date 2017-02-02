@@ -90,4 +90,4 @@
 //       expect(session.application.applicationId).to.equal('Invalid');
 //     });
 //   });
-});
+// });
