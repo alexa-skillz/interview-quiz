@@ -14,8 +14,8 @@
     "url": "git+https://github.com/alexa-skillz/interview-quiz.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Peter Kim",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/alexa-skillz/interview-quiz/issues"
   },
